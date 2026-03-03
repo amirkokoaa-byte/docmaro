@@ -1,0 +1,5 @@
+{
+  "name": "Medical Lens AI",
+  "description": "A comprehensive medical assistant for analyzing prescriptions, scans, and lab reports using AI.",
+  "requestFramePermissions": []
+}
