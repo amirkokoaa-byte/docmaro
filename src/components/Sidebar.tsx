@@ -42,7 +42,7 @@ export function Sidebar({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarP
       {/* Sidebar Container */}
       <aside 
         className={cn(
-          "fixed lg:static inset-y-0 right-0 z-50 w-72 transform transition-transform duration-300 ease-in-out lg:transform-none",
+          "fixed lg:static inset-y-0 right-0 z-50 w-[85vw] sm:w-72 transform transition-transform duration-300 ease-in-out lg:transform-none",
           "glass-panel border-l border-white/10 flex flex-col",
           isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
         )}
@@ -108,9 +108,13 @@ export function Sidebar({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarP
 
         {/* Footer */}
         <div className="p-6 border-t border-white/10">
-          <div className="glass-panel p-4 rounded-xl bg-gradient-to-br from-emerald-500/10 to-blue-500/10 border border-white/5">
+          <div className="glass-panel p-4 rounded-xl bg-gradient-to-br from-emerald-500/10 to-blue-500/10 border border-white/5 space-y-3">
             <p className="text-xs text-white/60 leading-relaxed text-center">
               هذا النظام مساعد ذكي ولا يغني عن استشارة الطبيب المختص.
+            </p>
+            <div className="w-full h-px bg-white/5" />
+            <p className="text-xs text-emerald-400/80 text-center font-medium">
+              مع تحيات المطور Amir Lamay
             </p>
           </div>
         </div>

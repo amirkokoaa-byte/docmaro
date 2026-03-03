@@ -1,6 +1,18 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let ai: GoogleGenAI | null = null;
+
+function getAiClient() {
+  if (ai) return ai;
+
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("مفتاح API مفقود. يرجى إضافة GEMINI_API_KEY في إعدادات البيئة (Environment Variables) على Vercel.");
+  }
+
+  ai = new GoogleGenAI({ apiKey });
+  return ai;
+}
 
 export type AnalysisType = 'prescription' | 'scan' | 'lab-report';
 
@@ -36,13 +48,14 @@ const PROMPTS = {
 
 export async function analyzeMedicalImage(file: File, type: AnalysisType): Promise<string> {
   try {
+    const client = getAiClient();
     const base64Data = await fileToGenerativePart(file);
     
     const model = "gemini-2.5-flash"; // Using flash for speed and multimodal capabilities
     
     const prompt = PROMPTS[type];
 
-    const response = await ai.models.generateContent({
+    const response = await client.models.generateContent({
       model: model,
       contents: {
         parts: [
@@ -55,6 +68,9 @@ export async function analyzeMedicalImage(file: File, type: AnalysisType): Promi
     return response.text || "عذراً، لم أتمكن من تحليل الصورة. يرجى المحاولة مرة أخرى.";
   } catch (error) {
     console.error("Error analyzing image:", error);
+    if (error instanceof Error) {
+        throw error;
+    }
     throw new Error("حدث خطأ أثناء تحليل الصورة. تأكد من أن الصورة واضحة وحاول مرة أخرى.");
   }
 }

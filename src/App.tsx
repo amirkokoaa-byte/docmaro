@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { AnalysisView } from '@/components/AnalysisView';
 import { AnalysisType } from '@/services/geminiService';
+import { Clock } from '@/components/Clock';
 import { Menu } from 'lucide-react';
 
 export default function App() {
@@ -39,6 +40,11 @@ export default function App() {
         />
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-8 lg:p-12 scroll-smooth">
+          {/* Clock Header */}
+          <div className="flex justify-center mb-6 lg:mb-8">
+            <Clock />
+          </div>
+
           <AnalysisView type={activeTab} />
         </main>
       </div>
